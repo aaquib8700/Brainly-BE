@@ -45,15 +45,20 @@ app.post("/api/v1/signup", async (req, res) => {
 app.post("/api/v1/signin", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
+    console.log("Signin attempt for username:", username);
+    console.log("Password received:", password ? "yes (length: " + password.length + ")" : "no");
     const existingUser = await UserModel.findOne({
         username,
     });
+    console.log("User found:", existingUser ? "yes" : "no");
     if (!existingUser) {
-        res.status(404).json({
+        return res.status(404).json({
             message: "User does not exist",
         });
     }
+    console.log("Stored password hash:", existingUser.password);
     const passwordMatch = await bcrypt.compare(password, existingUser.password);
+    console.log("Password match:", passwordMatch);
     if (passwordMatch) {
         const token = jwt.sign({
             id: existingUser._id
@@ -63,9 +68,10 @@ app.post("/api/v1/signin", async (req, res) => {
         });
     }
     else {
-        res.status(403).json({
+        return res.status(403).json({
             message: "Incorrect Credentials"
         });
+        // return;
     }
 });
 app.post("/api/v1/content", userMiddlware, async (req, res) => {

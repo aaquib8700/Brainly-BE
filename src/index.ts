@@ -54,17 +54,25 @@ app.post("/api/v1/signin", async (req, res) => {
     const username=req.body.username;
     const password=req.body.password;
 
+    console.log("Signin attempt for username:", username);
+    console.log("Password received:", password ? "yes (length: " + password.length + ")" : "no");
+
     const existingUser=await UserModel.findOne({
         username,
     })
 
+    console.log("User found:", existingUser ? "yes" : "no");
+
     if(!existingUser){
-        res.status(404).json({
+        return res.status(404).json({
             message:"User does not exist",
         })
+
     }
 
+    console.log("Stored password hash:", (existingUser as any).password);
     const passwordMatch= await bcrypt.compare(password,(existingUser as any).password);
+    console.log("Password match:", passwordMatch);
 
     if(passwordMatch){
         const token=jwt.sign({
@@ -76,9 +84,10 @@ app.post("/api/v1/signin", async (req, res) => {
         })
     }
     else{
-        res.status(403).json({
+        return res.status(403).json({
             message:"Incorrect Credentials"
         })
+        // return;
     }
 });
 
@@ -214,3 +223,4 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
+ 

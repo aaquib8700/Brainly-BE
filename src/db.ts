@@ -1,5 +1,5 @@
 import mongoose, {model,Schema } from "mongoose";
-import { required } from "zod/mini";
+
 
 mongoose.connect(
   "mongodb+srv://mrshoeb417_db_user:wsdddaCpoLyItytS@cluster0.2j1femg.mongodb.net/brainly-database?retryWrites=true&w=majority&appName=Cluster0");
