@@ -87,7 +87,6 @@ app.post("/api/v1/signin", async (req, res) => {
         return res.status(403).json({
             message:"Incorrect Credentials"
         })
-        // return;
     }
 });
 

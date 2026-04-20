@@ -1,5 +1,5 @@
 import mongoose, { model, Schema } from "mongoose";
-mongoose.connect("mongodb+srv://mrshoeb417_db_user:wsdddaCpoLyItytS@cluster0.2j1femg.mongodb.net/brainly-database?retryWrites=true&w=majority&appName=Cluster0");
+mongoose.connect("mongodb://localhost:27017/brainly-database");
 const UserSchema = new Schema({
     username: { type: String, unique: true },
     password: String,

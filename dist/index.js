@@ -71,7 +71,6 @@ app.post("/api/v1/signin", async (req, res) => {
         return res.status(403).json({
             message: "Incorrect Credentials"
         });
-        // return;
     }
 });
 app.post("/api/v1/content", userMiddlware, async (req, res) => {
