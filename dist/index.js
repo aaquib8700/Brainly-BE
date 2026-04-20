@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import z, { hash } from "zod";
 import { ContentModel, LinkModel, UserModel } from "./db.js";
 import bcrypt from "bcrypt";
-import { JWT_SECRET } from "./config.js";
 import { userMiddlware } from "./middleware.js";
 import { random } from "./utils.js";
 import cors from 'cors';
@@ -62,7 +61,7 @@ app.post("/api/v1/signin", async (req, res) => {
     if (passwordMatch) {
         const token = jwt.sign({
             id: existingUser._id
-        }, JWT_SECRET);
+        }, process.env.JWT_SECRET);
         res.json({
             token
         });
